@@ -1,0 +1,15 @@
+---
+- name: Creating OCP Projects
+  command: "oc new-project {{ tenant_name | lower | replace('_', '-') }}-{{ item.name | lower | replace('_', '-') }} --token={{ ocp_token }}"
+  with_items: "{{ projects }}"
+  no_log: True
+
+- name: Configuring Admin users
+  command: "oc adm policy add-role-to-group admin {{ tenant_name | lower | replace('_', '-') }}-{{ item.name | lower | replace('_', '-') }}-admins -n {{ tenant_name | lower | replace('_', '-') }}-{{ item.name | lower | replace('_', '-') }} --token={{ ocp_token }}"
+  with_items: "{{ projects }}"
+  no_log: True
+
+- name: Configuring Standard users
+  command: "oc adm policy add-role-to-group basic-user {{ tenant_name | lower | replace('_', '-') }}-{{ item.name | lower | replace('_', '-') }}-users -n {{ tenant_name | lower | replace('_', '-') }}-{{ item.name | lower | replace('_', '-') }} --token={{ ocp_token }}"
+  with_items: "{{ projects }}"
+  no_log: True
