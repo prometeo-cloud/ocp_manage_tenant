@@ -110,13 +110,13 @@ How to invoke the role from a playbook:
 $ oc login -u system:admin
 
 # creates a service account
-$ oc create sa automator
+$ oc create sa automator -n openshift-infra
 
 # adds the account to the admin role
-$ oc adm policy add-cluster-role-to-user cluster-admin system:serviceaccount:default:automator
+$ oc adm policy add-cluster-role-to-user cluster-admin system:serviceaccount:openshift-infra:automator
 
 # gets the value of the token using the name
-$ oc serviceaccounts get-token automator
+$ oc serviceaccounts get-token automator -n openshift-infra
 ```
 
 ### How to check access rights

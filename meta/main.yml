@@ -54,4 +54,3 @@ galaxy_info:
   #       Maximum 20 tags per role.
 
 dependencies:
-  - rhidm_manage_users
