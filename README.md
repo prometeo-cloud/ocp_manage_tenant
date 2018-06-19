@@ -106,3 +106,28 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
     name: ocp_manage_tenant
     tasks_from: add_users
 ```
+
+## Appendix
+
+### How to create a token
+
+```bash
+# log in as sys admin
+$ oc login -u system:admin
+
+# creates a service account
+$ oc create sa automator -n openshift-infra
+
+# adds the account to the admin role
+$ oc adm policy add-cluster-role-to-user cluster-admin system:serviceaccount:openshift-infra:automator
+
+# gets the value of the token using the name
+$ oc serviceaccounts get-token automator -n openshift-infra
+```
+
+### How to check access rights
+
+```bash
+$ oc get sa automator -o yaml
+$ oc policy who-can create ProjectRequest
+```
