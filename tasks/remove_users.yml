@@ -1,28 +1,57 @@
 ---
-- name: Logging in using service account
-  command: "oc login {{ ocp_uri }} --token={{ ocp_token }}"
-
-- name: Un-assigning users from admin OCP role
+- name: Assigning users to the OCP admin role
   vars:
     namespace: "{{ tenant_name|lower|replace('_', '-') }}-{{ item.0.name|lower|replace('_', '-') }}"
     user: "{{ item.1 }} "
-  command: "oc adm policy remove-role-from-user admin {{ user }} -n {{ namespace }} --token={{ ocp_token }}"
+    group: "{{ tenant_name | lower | replace('_', '-') }}-{{ item.name | lower | replace('_', '-') }}-admins"
+  oc:
+    state: absent
+    inline:
+      kind: RoleBinding
+      metadata:
+        name: admin
+        namespace: "{{ namespace }}"
+      roleRef:
+        name: admin
+      subjects:
+      - kind: User
+        name: "{{ user }}"
+      - kind: Group
+        name: "{{ group }}"
+      userNames:
+      - "{{ user }}"
+      token: "{{ ocp_token }}"
+      validate_certs: no
   with_subelements:
     - "{{ projects }}"
     - admins
     - skip_missing: yes
 
-- name: Un-assigning users from view OCP role
+- name: Assigning users to the OCP view role
   vars:
     namespace: "{{ tenant_name|lower|replace('_', '-') }}-{{ item.0.name|lower|replace('_', '-') }}"
-    user: "{{ item.1 }}"
-  command: "oc adm policy remove-role-from-user view {{ user }} -n {{ namespace }} --token={{ ocp_token }}"
+    user: "{{ item.1 }} "
+    group: "{{ tenant_name | lower | replace('_', '-') }}-{{ item.name | lower | replace('_', '-') }}-users"
+  oc:
+    state: absent
+    inline:
+      kind: RoleBinding
+      metadata:
+        name: view
+        namespace: "{{ namespace }}"
+      roleRef:
+        name: view
+      subjects:
+      - kind: User
+        name: "{{ user }}"
+      - kind: Group
+        name: "{{ group }}"
+      userNames:
+      - "{{ user }}"
+      token: "{{ ocp_token }}"
+      validate_certs: no
   with_subelements:
     - "{{ projects }}"
     - users
-    - skip_missing: yes  
-
-- name: Logout of service account
-  command: "oc logout"
-
-
+    - skip_missing: yes
+...

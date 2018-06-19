@@ -9,11 +9,11 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
 ```yaml
 - host: localhost
   tasks:
-  name: adding tenant projects
-  vars:
-    ocp_token: 'iejdwjoejdoiedieowmdoewmdomwoie...'
-    tenant_name: 'Tenant_A'
-    projects:
+  - name: adding tenant projects
+    vars:
+        ocp_token: 'iejdwjoejdoiedieowmdoewmdomwoie...'
+        tenant_name: 'Tenant_A'
+        projects:
         - name: 'DEV'
           displayName: 'Development'
           description: 'Development environment'
@@ -23,26 +23,33 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
         - name: 'DEMO'
           displayName: 'Demonstration'
           description: 'Demo environment'
-  include_role: 
-    name: ocp_manage_tenant
-    tasks_from: add_projects
+    include_role: 
+        name: ocp_manage_tenant
+        tasks_from: add_projects
 ```
 
 ## Deleting Tenant Projects example
 
 ```yaml
 - host: localhost
-  name: deleting tenant projects
-  vars:
-    ocp_token: 'iejdwjoejdoiedieowmdoewmdomwoie...'
-    tenant_name: 'Tenant_A'
-    projects:
+  tasks:
+  - name: adding tenant projects
+    vars:
+        ocp_token: 'iejdwjoejdoiedieowmdoewmdomwoie...'
+        tenant_name: 'Tenant_A'
+        projects:
         - name: 'DEV'
+          displayName: 'Development'
+          description: 'Development environment'
         - name: 'TEST'
+          displayName: 'Functional Test'
+          description: 'Functional Test environment'
         - name: 'DEMO'
-  include_role: 
-    name: ocp_manage_tenant
-    tasks_from: delete_projects
+          displayName: 'Demonstration'
+          description: 'Demo environment'
+    include_role: 
+        name: ocp_manage_tenant
+        tasks_from: add_projects
 ```
 
 
