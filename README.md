@@ -10,7 +10,6 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
 - host: localhost
   name: adding tenant projects
   vars:
-    ocp_uri: 'https://<<ip>>:8443'
     ocp_token: 'iejdwjoejdoiedieowmdoewmdomwoie...'
     tenant_name: 'Tenant_A'
     projects:
@@ -28,7 +27,6 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
 - host: localhost
   name: deleting tenant projects
   vars:
-    ocp_uri: 'https://<<ip>>:8443'
     ocp_token: 'iejdwjoejdoiedieowmdoewmdomwoie...'
     tenant_name: 'Tenant_A'
     projects:
@@ -47,7 +45,6 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
 - host: localhost
   name: adding tenant project users
   vars:
-    ocp_uri: 'https://<<ip>>:8443'
     ocp_token: 'iejdwjoejdoiedieowmdoewmdomwoie...'
     tenant_name: 'Tenant_A'
     projects:
@@ -78,7 +75,6 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
 - host: localhost
   name: removing tenant project users
   vars:
-    ocp_uri: 'https://<<ip>>:8443'
     ocp_token: 'iejdwjoejdoiedieowmdoewmdomwoie...'
     tenant_name: 'Tenant_A'
     projects:
