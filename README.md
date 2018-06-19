@@ -8,14 +8,21 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
 
 ```yaml
 - host: localhost
+  tasks:
   name: adding tenant projects
   vars:
     ocp_token: 'iejdwjoejdoiedieowmdoewmdomwoie...'
     tenant_name: 'Tenant_A'
     projects:
         - name: 'DEV'
+          displayName: 'Development'
+          description: 'Development environment'
         - name: 'TEST'
+          displayName: 'Functional Test'
+          description: 'Functional Test environment'
         - name: 'DEMO'
+          displayName: 'Demonstration'
+          description: 'Demo environment'
   include_role: 
     name: ocp_manage_tenant
     tasks_from: add_projects
@@ -109,7 +116,7 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
 
 ## Appendix
 
-### How to create a token
+### How to create a token for a service account
 
 ```bash
 # log in as sys admin
