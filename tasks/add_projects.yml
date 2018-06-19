@@ -1,0 +1,66 @@
+---
+- name: Creating OCP projects
+  oc:
+    state: present
+    inline:
+      kind: ProjectRequest
+      metadata:
+        name: "{{ tenant_name | lower | replace('_', '-') }}-{{ item.name | lower | replace('_', '-') }}"
+      displayName: "{{ item.displayName }}"
+      description: "{{ item.description }}"
+    token: "{{ ocp_token }}"
+  with_items: "{{ projects }}"
+
+- name: Assigning users to the OCP admin role
+  vars:
+    namespace: "{{ tenant_name|lower|replace('_', '-') }}-{{ item.0.name|lower|replace('_', '-') }}"
+    user: "{{ item.1 }} "
+    group: "{{ tenant_name | lower | replace('_', '-') }}-{{ item.name | lower | replace('_', '-') }}-admins"
+  oc:
+    state: present
+    inline:
+      kind: RoleBinding
+      metadata:
+        name: admin
+        namespace: "{{ namespace }}"
+      roleRef:
+        name: admin
+      subjects:
+      - kind: User
+        name: "{{ user }}"
+      - kind: Group
+        name: "{{ group }}"
+      userNames:
+      - "{{ user }}"
+      token: "{{ ocp_token }}"
+  with_subelements:
+    - "{{ projects }}"
+    - admins
+    - skip_missing: yes
+
+- name: Assigning users to the OCP view role
+  vars:
+    namespace: "{{ tenant_name|lower|replace('_', '-') }}-{{ item.0.name|lower|replace('_', '-') }}"
+    user: "{{ item.1 }} "
+    group: "{{ tenant_name | lower | replace('_', '-') }}-{{ item.name | lower | replace('_', '-') }}-users"
+  oc:
+    state: present
+    inline:
+      kind: RoleBinding
+      metadata:
+        name: view
+        namespace: "{{ namespace }}"
+      roleRef:
+        name: view
+      subjects:
+      - kind: User
+        name: "{{ user }}"
+      - kind: Group
+        name: "{{ group }}"
+      userNames:
+      - "{{ user }}"
+      token: "{{ ocp_token }}"
+  with_subelements:
+    - "{{ projects }}"
+    - users
+    - skip_missing: yes

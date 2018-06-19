@@ -1,0 +1,17 @@
+---
+- name: Logging in to OCP using service account
+  command: "oc  login {{ ocp_uri }} --token={{ ocp_token }}"
+
+- name: Deleting OCP project(s)
+  oc:
+    state: absent
+    inline:
+      kind: ProjectRequest
+      metadata:
+        name: "{{ tenant_name | lower | replace('_', '-') }}-{{ item.name | lower | replace('_', '-') }}"
+    token: "{{ ocp_token }}"
+  with_items: "{{ projects }}"
+
+- name: Logging out of OCP service account
+  command: "oc logout"
+...

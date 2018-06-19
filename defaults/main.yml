@@ -1,3 +1,12 @@
 ---
 ocp_port: "8443"
+
+large_cpuquota: "4"
+large_memoryquota: "8"
+
+medium_cpuquota: "2"
+medium_memoryquota: "4"
+
+small_cpuquota: "1"
+small_memoryquota: "1"
 ...

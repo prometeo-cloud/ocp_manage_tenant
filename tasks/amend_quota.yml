@@ -1,0 +1,40 @@
+---
+- name: Logging in using service account
+  command: "oc login {{ ocp_uri }} --token={{ ocp_token }}"
+
+- set_fact:
+    full_project_name: "{{ tenant_name|lower|replace('_', '-') }}-{{ projects.0.name|lower|replace('_', '-')}}"
+
+- name: Getting any existing quotas
+  command: "oc get quota -n {{ full_project_name }}"
+  register: quotas
+
+- name: Removing compute-large quota (if exists)
+  command: "oc delete quota compute-large -n {{ full_project_name }}"
+  when: quotas.stdout is search("\ncompute-large ")
+
+- name: Removing compute-medium quota (if exists)
+  command: "oc delete quota compute-medium -n {{ full_project_name }}"
+  when: quotas.stdout is search("\ncompute-medium ")
+
+- name: Removing compute-small quota (if exists)
+  command: "oc delete quota compute-small -n {{ full_project_name }}"
+  when: quotas.stdout is search("\ncompute-small ")
+
+- name: Adding compute-large quota to project(s)
+  command: "oc create quota compute-large --hard=cpu={{large_cpuquota}},memory={{large_memoryquota}}G -n {{ full_project_name }}"
+  with_items: "{{projects}}"
+  when:  projects.0.quota | lower == "large"
+
+- name: Adding compute-medium quota to project(s)
+  command: "oc create quota compute-medium --hard=cpu={{medium_cpuquota}},memory={{medium_memoryquota}}G -n {{ full_project_name }}"
+  with_items: "{{projects}}"
+  when:  projects.0.quota | lower == "medium"
+
+- name: Adding compute-small quota to project(s)
+  command: "oc create quota compute-small --hard=cpu={{small_cpuquota}},memory={{small_memoryquota}}G -n {{ full_project_name }}"
+  with_items: "{{projects}}"
+  when:  projects.0.quota | lower == "small"
+
+- name: Logout of service account
+  command: "oc logout"
