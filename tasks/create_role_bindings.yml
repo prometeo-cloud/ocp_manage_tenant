@@ -1,9 +1,9 @@
 ---
 - name: Assigning users to the OCP admin role
   vars:
-    namespace: "{{ tenant_name|lower|replace('_', '-') }}-{{ item.0.name|lower|replace('_', '-') }}"
+    namespace: "{{ tenant_name | lower | replace('_', '-') }}-{{ item.0.name | lower | replace('_', '-') }}"
     user: "{{ item.1 }} "
-    group: "{{ tenant_name | lower | replace('_', '-') }}-{{ item.name | lower | replace('_', '-') }}-admins"
+    group: "{{ tenant_name | lower | replace('_', '-') }}-{{ item.0.name | lower | replace('_', '-') }}-admins"
   oc:
     state: present
     inline:
@@ -14,14 +14,14 @@
       roleRef:
         name: admin
       subjects:
-      - kind: User
-        name: "{{ user }}"
-      - kind: Group
-        name: "{{ group }}"
+        - kind: User
+          name: "{{ user }}"
+        - kind: Group
+          name: "{{ group }}"
       userNames:
-      - "{{ user }}"
-      token: "{{ ocp_token }}"
-      validate_certs: no
+        - "{{ user }}"
+    token: "{{ ocp_token }}"
+    validate_certs: no
   with_subelements:
     - "{{ projects }}"
     - admins
@@ -29,9 +29,9 @@
 
 - name: Assigning users to the OCP view role
   vars:
-    namespace: "{{ tenant_name|lower|replace('_', '-') }}-{{ item.0.name|lower|replace('_', '-') }}"
+    namespace: "{{ tenant_name | lower | replace('_', '-') }}-{{ item.0.name | lower | replace('_', '-') }}"
     user: "{{ item.1 }} "
-    group: "{{ tenant_name | lower | replace('_', '-') }}-{{ item.name | lower | replace('_', '-') }}-users"
+    group: "{{ tenant_name | lower | replace('_', '-') }}-{{ item.0.name | lower | replace('_', '-') }}-users"
   oc:
     state: present
     inline:
@@ -42,14 +42,14 @@
       roleRef:
         name: view
       subjects:
-      - kind: User
-        name: "{{ user }}"
-      - kind: Group
-        name: "{{ group }}"
+        - kind: User
+          name: "{{ user }}"
+        - kind: Group
+          name: "{{ group }}"
       userNames:
-      - "{{ user }}"
-      token: "{{ ocp_token }}"
-      validate_certs: no
+        - "{{ user }}"
+    token: "{{ ocp_token }}"
+    validate_certs: no
   with_subelements:
     - "{{ projects }}"
     - users
