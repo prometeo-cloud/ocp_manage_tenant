@@ -4,14 +4,24 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
 
 **Note:** This role does not do any sync with LDAP, for that look at [ocp_manage_tenant_ldap_users](../ocp_manage_tenant_ldap_users) role.
 
-## Adding Tenant Projects example
+<a name="toc"></a>
+## Table of Contents 
+
+- [How to add projects to a tenant space](#add-projects)
+- [How to delete projects from a tenant space](#delete-projects)
+- [How to add users to a project](#add-users)
+- [How to remove users from a project](#remove-users)
+- [How to amend project size](#amend-project-size)
+
+<a name="add_projects"></a>
+## How to add projects to a tenant space [[up](#toc)]
 
 ```yaml
 - host: localhost
   tasks:
   - name: adding tenant projects
     vars:
-        ocp_token: 'iejdwjoejdoiedieowmdoewmdomwoie...'
+        ocp_token: '<<add a token here>>'
         tenant_name: 'Tenant_A'
         projects:
         - name: 'DEV'
@@ -28,14 +38,15 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
         tasks_from: add_projects
 ```
 
-## Deleting Tenant Projects example
+<a name="delete_projects"></a>
+## How to delete projects from a tenant space [[up](#toc)]
 
 ```yaml
 - host: localhost
   tasks:
   - name: adding tenant projects
     vars:
-        ocp_token: 'iejdwjoejdoiedieowmdoewmdomwoie...'
+        ocp_token: '<<add a token here>>'
         tenant_name: 'Tenant_A'
         projects:
         - name: 'DEV'
@@ -52,14 +63,14 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
         tasks_from: add_projects
 ```
 
-
-## Adding Tenant Project users example
+<a name="add-users"></a>
+## How to add users to a project [[up](#toc)]
 
 ```yaml
 - host: localhost
   name: adding tenant project users
   vars:
-    ocp_token: 'iejdwjoejdoiedieowmdoewmdomwoie...'
+    ocp_token: '<<add a token here>>'
     tenant_name: 'Tenant_A'
     projects:
       - name: 'DEV'
@@ -85,11 +96,13 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
     tasks_from: add_users
 ```
 
+<a name="remove-users"></a>
+## How to remove users from a project [[up](#toc)]
 ```yaml
 - host: localhost
   name: removing tenant project users
   vars:
-    ocp_token: 'iejdwjoejdoiedieowmdoewmdomwoie...'
+    ocp_token: '<<add a token here>>'
     tenant_name: 'Tenant_A'
     projects:
       - name: 'DEV'
@@ -119,6 +132,13 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
   include_role: 
     name: ocp_manage_tenant
     tasks_from: add_users
+```
+<a name="amend-project-size"></a>
+## How to amend a project's size 
+
+```yaml
+
+
 ```
 
 ## Appendix
