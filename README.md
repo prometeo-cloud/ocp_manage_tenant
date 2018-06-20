@@ -49,15 +49,15 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
         ocp_token: '<<add a token here>>'
         tenant_name: 'Tenant_A'
         projects:
-            - name: 'DEV'
-              displayName: 'Development'
-              description: 'Development environment'
-            - name: 'TEST'
-              displayName: 'Functional Test'
-              description: 'Functional Test environment'
-            - name: 'DEMO'
-              displayName: 'Demonstration'
-              description: 'Demo environment'
+        - name: 'DEV'
+          displayName: 'Development'
+          description: 'Development environment'
+        - name: 'TEST'
+          displayName: 'Functional Test'
+          description: 'Functional Test environment'
+        - name: 'DEMO'
+          displayName: 'Demonstration'
+          description: 'Demo environment'
     include_role: 
         name: ocp_manage_tenant
         tasks_from: create_projects
@@ -74,24 +74,24 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
     ocp_token: '<<add a token here>>'
     tenant_name: 'Tenant_A'
     projects:
-      - name: 'DEV'
-        admins:
-          - devAdmin@acme.com
-        users:
-          - dev1@acme.com
-          - dev2@acme.com
-      - name: 'TEST'
-        admins:
-          - testAdmin@acme.com
-        users:
-          - tester1@acme.com
-          - tester2@acme.com
-      - name: 'DEMO'
-        admins:
-          - demoAdmin@acme.com
-        users:
-          - demo1@acme.com
-          - demo2@acme.com
+    - name: 'DEV'
+      admins:
+      - devAdmin@acme.com
+      users:
+      - dev1@acme.com
+      - dev2@acme.com
+    - name: 'TEST'
+      admins:
+      - testAdmin@acme.com
+      users:
+      - tester1@acme.com
+      - tester2@acme.com
+    - name: 'DEMO'
+      admins:
+      - demoAdmin@acme.com
+      users:
+      - demo1@acme.com
+      - demo2@acme.com
     include_role: 
         name: ocp_manage_tenant
         tasks_from: create_role_bindings
@@ -107,30 +107,30 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
         ocp_token: '<<add a token here>>'
         tenant_name: 'Tenant_A'
         projects:
-            - name: 'DEV'
-              displayName: 'Development'
-              description: 'Development environment'
-              admins:
-                - devAdmin@acme.com
-              users:
-                - dev1@acme.com
-                - dev2@acme.com
-            - name: 'TEST'
-              displayName: 'Functional Test'
-              description: 'Functional test environment'
-              admins:
-                - testAdmin@acme.com\\
-              users:
-                - tester1@acme.com
-                - tester2@acme.com
-            - name: 'DEMO'
-              displayName: 'Demonstration'
-              description: 'Demonstration environment'
-              admins:
-                - demoAdmin@acme.com
-              users:
-                - demo1@acme.com
-                - demo2@acme.com
+        - name: 'DEV'
+          displayName: 'Development'
+          description: 'Development environment'
+          admins:
+          - devAdmin@acme.com
+          users:
+          - dev1@acme.com
+          - dev2@acme.com
+        - name: 'TEST'
+          displayName: 'Functional Test'
+          description: 'Functional test environment'
+          admins:
+          - testAdmin@acme.com\\
+          users:
+          - tester1@acme.com
+          - tester2@acme.com
+        - name: 'DEMO'
+          displayName: 'Demonstration'
+          description: 'Demonstration environment'
+          admins:
+          - demoAdmin@acme.com
+          users:
+          - demo1@acme.com
+          - demo2@acme.com
       include_role: 
         name: ocp_manage_tenant
         tasks_from: delete_role_bindings
