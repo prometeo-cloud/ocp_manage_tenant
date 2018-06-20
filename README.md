@@ -17,7 +17,7 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
 ## How to add projects to a tenant space [[up](#toc)]
 
 ```yaml
-- host: localhost
+- hosts: localhost
   tasks:
   - name: adding tenant projects
     vars:
@@ -42,7 +42,7 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
 ## How to delete projects from a tenant space [[up](#toc)]
 
 ```yaml
-- host: localhost
+- hosts: localhost
   tasks:
   - name: adding tenant projects
     vars:
@@ -67,7 +67,7 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
 ## How to add users to a project [[up](#toc)]
 
 ```yaml
-- host: localhost
+- hosts: localhost
   name: adding tenant project users
   vars:
     ocp_token: '<<add a token here>>'
@@ -99,7 +99,7 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
 <a name="remove-users"></a>
 ## How to remove users from a project [[up](#toc)]
 ```yaml
-- host: localhost
+- hosts: localhost
   name: removing tenant project users
   vars:
     ocp_token: '<<add a token here>>'
