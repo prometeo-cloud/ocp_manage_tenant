@@ -12,5 +12,5 @@
     validate_certs: no
   with_items: "{{ projects }}"
 
-- import_playbook: "create_role_bindings.yml"
+- include_tasks: "create_role_bindings.yml"
 ...
