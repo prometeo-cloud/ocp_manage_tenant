@@ -71,27 +71,27 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
   tasks:
   - name: adding tenant project users
     vars:
-    ocp_token: '<<add a token here>>'
-    tenant_name: 'Tenant_A'
-    projects:
-    - name: 'DEV'
-      admins:
-      - devAdmin@acme.com
-      users:
-      - dev1@acme.com
-      - dev2@acme.com
-    - name: 'TEST'
-      admins:
-      - testAdmin@acme.com
-      users:
-      - tester1@acme.com
-      - tester2@acme.com
-    - name: 'DEMO'
-      admins:
-      - demoAdmin@acme.com
-      users:
-      - demo1@acme.com
-      - demo2@acme.com
+        ocp_token: '<<add a token here>>'
+        tenant_name: 'Tenant_A'
+        projects:
+        - name: 'DEV'
+          admins:
+          - devAdmin@acme.com
+          users:
+          - dev1@acme.com
+          - dev2@acme.com
+        - name: 'TEST'
+          admins:
+          - testAdmin@acme.com
+          users:
+          - tester1@acme.com
+          - tester2@acme.com
+        - name: 'DEMO'
+          admins:
+          - demoAdmin@acme.com
+          users:
+          - demo1@acme.com
+          - demo2@acme.com
     include_role: 
         name: ocp_manage_tenant
         tasks_from: create_role_bindings
