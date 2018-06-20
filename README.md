@@ -93,7 +93,7 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
         - demo2@acme.com
   include_role: 
     name: ocp_manage_tenant
-    tasks_from: add_users
+    tasks_from: add_role_bindings
 ```
 
 <a name="remove-users"></a>
@@ -131,7 +131,7 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
         - demo2@acme.com
   include_role: 
     name: ocp_manage_tenant
-    tasks_from: add_users
+    tasks_from: remove_role_bindings
 ```
 <a name="amend-project-size"></a>
 ## How to amend a project's size 
