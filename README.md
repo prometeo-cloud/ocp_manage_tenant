@@ -35,7 +35,7 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
           description: 'Demo environment'
     include_role: 
         name: ocp_manage_tenant
-        tasks_from: add_projects
+        tasks_from: create_projects
 ```
 
 <a name="delete_projects"></a>
@@ -60,7 +60,7 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
           description: 'Demo environment'
     include_role: 
         name: ocp_manage_tenant
-        tasks_from: add_projects
+        tasks_from: create_projects
 ```
 
 <a name="add-users"></a>
@@ -93,7 +93,7 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
         - demo2@acme.com
   include_role: 
     name: ocp_manage_tenant
-    tasks_from: add_role_bindings
+    tasks_from: create_role_bindings
 ```
 
 <a name="remove-users"></a>
@@ -131,7 +131,7 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
         - demo2@acme.com
   include_role: 
     name: ocp_manage_tenant
-    tasks_from: remove_role_bindings
+    tasks_from: delete_role_bindings
 ```
 <a name="amend-project-size"></a>
 ## How to amend a project's size 
