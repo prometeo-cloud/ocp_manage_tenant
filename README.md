@@ -68,8 +68,9 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
 
 ```yaml
 - hosts: localhost
-  name: adding tenant project users
-  vars:
+  tasks:
+  - name: adding tenant project users
+    vars:
     ocp_token: '<<add a token here>>'
     tenant_name: 'Tenant_A'
     projects:
@@ -79,59 +80,60 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
         users:
           - dev1@acme.com
           - dev2@acme.com
-    - name: 'TEST'
-      admins:
-        - testAdmin@acme.com
-      users:
-        - tester1@acme.com
-        - tester2@acme.com
-    - name: 'DEMO'
-      admins:
-        - demoAdmin@acme.com
-      users:
-        - demo1@acme.com
-        - demo2@acme.com
-  include_role: 
-    name: ocp_manage_tenant
-    tasks_from: create_role_bindings
+      - name: 'TEST'
+        admins:
+          - testAdmin@acme.com
+        users:
+          - tester1@acme.com
+          - tester2@acme.com
+      - name: 'DEMO'
+        admins:
+          - demoAdmin@acme.com
+        users:
+          - demo1@acme.com
+          - demo2@acme.com
+    include_role: 
+        name: ocp_manage_tenant
+        tasks_from: create_role_bindings
 ```
 
 <a name="remove-users"></a>
 ## How to remove users from a project [[up](#toc)]
 ```yaml
 - hosts: localhost
-  name: removing tenant project users
-  vars:
-    ocp_token: '<<add a token here>>'
-    tenant_name: 'Tenant_A'
-    projects:
-      - name: 'DEV'
-        displayName: 'Development'
-        description: 'Development environment'
-        admins:
-          - devAdmin@acme.com
-        users:
-          - dev1@acme.com
-          - dev2@acme.com
-    - name: 'TEST'
-      displayName: 'Functional Test'
-      description: 'Functional test environment'
-      admins:
-        - testAdmin@acme.com\\
-      users:
-        - tester1@acme.com
-        - tester2@acme.com
-    - name: 'DEMO'
-      displayName: 'Demonstration'
-      description: 'Demonstration environment'
-      admins:
-        - demoAdmin@acme.com
-      users:
-        - demo1@acme.com
-        - demo2@acme.com
-  include_role: 
-    name: ocp_manage_tenant
-    tasks_from: delete_role_bindings
+  tasks:
+    - name: removing tenant project users
+      vars:
+        ocp_token: '<<add a token here>>'
+        tenant_name: 'Tenant_A'
+        projects:
+          - name: 'DEV'
+            displayName: 'Development'
+            description: 'Development environment'
+            admins:
+              - devAdmin@acme.com
+            users:
+              - dev1@acme.com
+              - dev2@acme.com
+        - name: 'TEST'
+          displayName: 'Functional Test'
+          description: 'Functional test environment'
+          admins:
+            - testAdmin@acme.com\\
+          users:
+            - tester1@acme.com
+            - tester2@acme.com
+        - name: 'DEMO'
+          displayName: 'Demonstration'
+          description: 'Demonstration environment'
+          admins:
+            - demoAdmin@acme.com
+          users:
+            - demo1@acme.com
+            - demo2@acme.com
+      include_role: 
+        name: ocp_manage_tenant
+        tasks_from: delete_role_bindings
 ```
 <a name="amend-project-size"></a>
 ## How to amend a project's size 
