@@ -1,11 +1,8 @@
 ---
 - name: Deleting OCP project(s)
-  oc:
+  openshift_raw:
     state: absent
-    inline:
-      kind: ProjectRequest
-      metadata:
-        name: "{{ tenant_name | lower | replace('_', '-') }}-{{ item.name | lower | replace('_', '-') }}"
+    definition: "{{ lookup('template', 'project.yml') | from_yaml }}"
     token: "{{ ocp_token }}"
     validate_certs: no
   with_items: "{{ projects }}"

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: RoleBinding
+metadata:
+  name: "{{ role_binding_name }}"
+  namespace: "{{ namespace }}"
+roleRef:
+  name: "{{ role_binding_name }}"
+subjects:
+  - kind: Group
+    name: "{{ group }}"

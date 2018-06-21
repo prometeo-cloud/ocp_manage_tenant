@@ -1,16 +1,43 @@
 ---
 - name: Creating OCP projects
-  oc:
+  openshift_raw:
     state: present
-    inline:
-      kind: ProjectRequest
-      metadata:
-        name: "{{ tenant_name | lower | replace('_', '-') }}-{{ item.name | lower | replace('_', '-') }}"
-      displayName: "{{ item.displayName | default(omit) }}"
-      description: "{{ item.description | default(omit) }}"
+    definition: "{{ lookup('template', 'project.yml') | from_yaml }}"
     token: "{{ ocp_token }}"
     validate_certs: no
   with_items: "{{ projects }}"
 
-- include_tasks: "create_role_bindings.yml"
+- name: Assigning users to the OCP admin role
+  vars:
+    namespace: "{{ tenant_name | lower | replace('_', '-') }}-{{ item.name | lower | replace('_', '-') }}"
+    group: "{{ tenant_name | lower | replace('_', '-') }}-{{ item.name | lower | replace('_', '-') }}-admins"
+    role_binding_name: "admin"
+  openshift_raw:
+    state: present
+    definition: "{{ lookup('template', 'role_binding.yml') | from_yaml }}"
+    token: "{{ ocp_token }}"
+    validate_certs: no
+  with_items:
+    - "{{ projects }}"
+
+- name: Assigning users to the OCP view role
+  vars:
+    namespace: "{{ tenant_name | lower | replace('_', '-') }}-{{ item.name | lower | replace('_', '-') }}"
+    group: "{{ tenant_name | lower | replace('_', '-') }}-{{ item.name | lower | replace('_', '-') }}-users"
+    role_binding_name: "view"
+  openshift_raw:
+    state: present
+    definition: "{{ lookup('template', 'role_binding.yml') | from_yaml }}"
+    token: "{{ ocp_token }}"
+    validate_certs: no
+  with_items:
+    - "{{ projects }}"
+
+- name: Creating resource quotas
+  openshift_raw:
+    state: present
+    definition: "{{ lookup('template', 'quota.yml') | from_yaml }}"
+    token: "{{ ocp_token }}"
+    validate_certs: no
+  with_items: "{{ projects }}"
 ...

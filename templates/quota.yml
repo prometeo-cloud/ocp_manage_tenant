@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: "{{ project_name }}_quota"
+  namespace: "{{ project_name }}"
+  selfLink: "/api/v1/namespaces/{{ project_name }}/resourcequotas/{{ project_name }}_quota"
+spec:
+  hard:
+    cpu: "{{ item.cpu | default(2) }}"
+    memory: "{{ item.memory | default(1) }}G"

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Project
+metadata:
+  name: "{{ tenant_name | lower | replace('_', '-') }}-{{ item.name | lower | replace('_', '-') }}"
+  annotations:
+    openshift.io/description: "{{ item.description | default(omit) }}"
+    openshift.io/display-name: "{{ item.displayName | default(omit) }}"

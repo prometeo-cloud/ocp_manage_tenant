@@ -9,12 +9,12 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
 
 - [How to add projects to a tenant space](#add-projects)
 - [How to delete projects from a tenant space](#delete-projects)
-- [How to add users to a project](#add-users)
-- [How to remove users from a project](#remove-users)
 - [How to amend project size](#amend-project-size)
 
 <a name="add_projects"></a>
 ## How to add projects to a tenant space [[up](#toc)]
+
+To add project to a tenant space run this role with parameters as indicated below.
 
 ```yaml
 - hosts: localhost
@@ -29,14 +29,30 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
           - name: DEV
             description: "Development environment"
             displayName: Development
+            cpu: 2
+            memory: 1
           - name: TEST
             description: "Functional Test environment"
             displayName: "Functional Test"
+            cpu: 2
+            memory: 1
           - name: DEMO
             description: "Demo environment"
             displayName: Demonstration
+            cpu: 2
+            memory: 1
         tenant_name: Tenant_A
 ```
+
+**Note**: role bindings for admin and view roles will be creating in OCP mapping to the following directory group names:
+- **tenant_name-project_name-admins**: for the OCP admin role.
+- **tenant_name-project_name-users**: for the OCP view role.
+
+This role however, does not create the directory groups, this is done by [ocp_manage_tenant_ldap](../ocp_manage_tenant_ldap).
+
+This role, also create hard resource quotas for vCPUs and memory on projects in the tenant.
+
+The playbook [cfg_ocp_manage_tenant](../cfg_ocp_manage_tenant), aggregates the two roles above and should be the default choice for managing tenant spaces.
 
 <a name="delete_projects"></a>
 ## How to delete projects from a tenant space [[up](#toc)]
@@ -63,72 +79,6 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
         tenant_name: Tenant_A
 ```
 
-<a name="add-users"></a>
-## How to add users to a project [[up](#toc)]
-
-```yaml
-- hosts: localhost
-  tasks: 
-    - name: "adding tenant project users"
-      include_role: 
-        name: ocp_manage_tenant
-        tasks_from: create_role_bindings
-      vars: 
-        ocp_token: "<<add a token here>>"
-        projects: 
-          - name: DEV
-            admins: 
-              - devAdmin@acme.com
-            users: 
-              - dev1@acme.com
-              - dev2@acme.com
-          - name: TEST
-            admins: 
-              - testAdmin@acme.com
-            users: 
-              - tester1@acme.com
-              - tester2@acme.com
-          - name: DEMO
-            admins: 
-              - demoAdmin@acme.com
-            users: 
-              - demo1@acme.com
-              - demo2@acme.com
-        tenant_name: Tenant_A
-```
-
-<a name="remove-users"></a>
-## How to remove users from a project [[up](#toc)]
-```yaml
-- hosts: localhost
-  tasks: 
-    - name: "adding tenant project users"
-      include_role: 
-        name: ocp_manage_tenant
-        tasks_from: delete_role_bindings
-      vars: 
-        ocp_token: "<<add a token here>>"
-        projects: 
-          - name: DEV
-            admins: 
-              - devAdmin@acme.com
-            users: 
-              - dev1@acme.com
-              - dev2@acme.com
-          - name: TEST
-            admins: 
-              - testAdmin@acme.com
-            users: 
-              - tester1@acme.com
-              - tester2@acme.com
-          - name: DEMO
-            admins: 
-              - demoAdmin@acme.com
-            users: 
-              - demo1@acme.com
-              - demo2@acme.com
-        tenant_name: Tenant_A
-```
 <a name="amend-project-size"></a>
 ## How to amend a project's size 
 
