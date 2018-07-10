@@ -1,6 +1,6 @@
 ---
 - name: Deleting OCP project(s)
-  openshift_raw:
+  k8s:
     state: absent
     definition: "{{ lookup('template', 'project.yml') | from_yaml }}"
     api_key: "{{ ocp_token }}"

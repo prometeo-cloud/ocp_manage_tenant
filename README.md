@@ -24,7 +24,7 @@ To add project to a tenant space run this role with parameters as indicated belo
         name: ocp_manage_tenant
         tasks_from: create_projects
       vars: 
-        ocp_token: "<<add a token here>>"
+        api_key: "<<add a token here>>"
         projects: 
           - name: DEV
             description: "Development environment"
@@ -65,7 +65,7 @@ The playbook [cfg_ocp_manage_tenant](../cfg_ocp_manage_tenant), aggregates the t
         name: ocp_manage_tenant
         tasks_from: delete_projects
       vars: 
-        ocp_token: "<<add a token here>>"
+        api_key: "<<add a token here>>"
         projects: 
           - name: DEV
             description: "Development environment"
