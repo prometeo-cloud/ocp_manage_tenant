@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ResourceQuota
 metadata:
   name: "{{ namespace }}_quota"
-  namespace: "{{ project_name }}"
+  namespace: "{{ namespace }}"
   selfLink: "/api/v1/namespaces/{{ namespace }}/resourcequotas/{{ namespace }}_quota"
 spec:
   hard:
