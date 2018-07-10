@@ -34,6 +34,8 @@
     - "{{ projects }}"
 
 - name: Creating resource quotas
+  vars:
+    namespace: "{{ tenant_name | lower | replace('_', '-') }}-{{ item.name | lower | replace('_', '-') }}"
   k8s:
     state: present
     definition: "{{ lookup('template', 'quota.yml') | from_yaml }}"

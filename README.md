@@ -7,9 +7,19 @@ Creates and deletes OCP projects and add / remove users to/from the projects.
 <a name="toc"></a>
 ## Table of Contents 
 
+- [Pre-requisites](#prereqs)
 - [How to add projects to a tenant space](#add-projects)
 - [How to delete projects from a tenant space](#delete-projects)
 - [How to amend project size](#amend-project-size)
+
+<a name="prereqs"></a>
+### Pre-requisites 
+
+In order to use this role the following pre-requisites are required:
+
+- Ansible 2.6
+- [Openshift Python Client](#openshift-python-client)
+- [Have an OCP token](#ocp-token) 
 
 <a name="add_projects"></a>
 ## How to add projects to a tenant space [[up](#toc)]
@@ -24,7 +34,7 @@ To add project to a tenant space run this role with parameters as indicated belo
         name: ocp_manage_tenant
         tasks_from: create_projects
       vars: 
-        api_key: "<<add a token here>>"
+        ocp_token: "<<add a token here>>"
         projects: 
           - name: DEV
             description: "Development environment"
@@ -65,7 +75,7 @@ The playbook [cfg_ocp_manage_tenant](../cfg_ocp_manage_tenant), aggregates the t
         name: ocp_manage_tenant
         tasks_from: delete_projects
       vars: 
-        api_key: "<<add a token here>>"
+        ocp_token: "<<add a token here>>"
         projects: 
           - name: DEV
             description: "Development environment"
@@ -87,8 +97,17 @@ The playbook [cfg_ocp_manage_tenant](../cfg_ocp_manage_tenant), aggregates the t
 
 ```
 
-## Appendix
+<a name="python-client"></a>
+### Installing Openshift Python Client
 
+To install the Openshift Python client run the following commands:
+
+```bash
+$ sudo pip install --upgrade setuptools
+$ sudo pip install openshift
+```
+
+<a name="ocp-token"></a>
 ### How to create a token for a service account
 
 ```bash
@@ -103,11 +122,4 @@ $ oc adm policy add-cluster-role-to-user cluster-admin system:serviceaccount:ope
 
 # gets the value of the token using the name
 $ oc serviceaccounts get-token automator -n openshift-infra
-```
-
-### How to check access rights
-
-```bash
-$ oc get sa automator -o yaml
-$ oc policy who-can create ProjectRequest
 ```
