@@ -2,7 +2,7 @@
 
 Creates and deletes OCP projects and add / remove users to/from the projects.
 
-**Note:** This role does not do any sync with LDAP, for that look at [ocp_manage_tenant_ldap_users](../ocp_manage_tenant_ldap_users) role.
+**Note:** This role does not do any sync with LDAP, for that look at [ocp_manage_tenant_ldap](../ocp_manage_tenant_ldap) role.
 
 <a name="toc"></a>
 ## Table of Contents 
